@@ -24,7 +24,7 @@
   window.cloudPhotos={
     async upload(blob,kind){
       if(!user)throw Error('Entre na conta antes de enviar a foto.');
-      if(!['meals','workouts'].includes(kind))throw Error('Categoria inválida.');
+      if(!['meals','workouts','profile'].includes(kind))throw Error('Categoria inválida.');
       const path=user.id+'/'+kind+'/'+crypto.randomUUID()+'.jpg';
       const {error}=await client.storage.from(photoBucket).upload(path,blob,{contentType:'image/jpeg',upsert:false});
       if(error)throw error;
