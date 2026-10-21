@@ -191,7 +191,7 @@ function renderMobileMenu(){
  const secondary=menus.filter(([id])=>!primary.some(x=>x[0]===id));
  document.getElementById('mobile-more').innerHTML=secondary.map(([id,label])=>`<button type="button" onclick="mobileGo('${id}')">${label}</button>`).join('');
 }
-async async function refreshProfilePhoto(){
+async function refreshProfilePhoto(){
  const path=db.profile?.photoPath,avatar=document.getElementById('avatar'),brand=document.getElementById('sidebar-brandmark');
  const initials=(db.profile.name||'EU').trim().split(/\s+/).slice(0,2).map(x=>x[0].toUpperCase()).join('');
  avatar.textContent=initials;
