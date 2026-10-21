@@ -18,6 +18,21 @@
     return;
   }
   client=window.supabase.createClient(config.url,config.publishableKey,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+  // Fotos privadas: caminhos pertencentes à conta autenticada; URLs assinadas temporárias.
+  const photoBucket='minha-evolucao-fotos';
+  function assertMine(path){if(!user||!path.startsWith(user.id+'/'))throw Error('Foto fora da sua conta.');}
+  window.cloudPhotos={
+    async upload(blob,kind){
+      if(!user)throw Error('Entre na conta antes de enviar a foto.');
+      if(!['meals','workouts'].includes(kind))throw Error('Categoria inválida.');
+      const path=user.id+'/'+kind+'/'+crypto.randomUUID()+'.jpg';
+      const {error}=await client.storage.from(photoBucket).upload(path,blob,{contentType:'image/jpeg',upsert:false});
+      if(error)throw error;
+      return path;
+    },
+    async url(path){assertMine(path);const {data,error}=await client.storage.from(photoBucket).createSignedUrl(path,120);if(error)throw error;return data.signedUrl;},
+    async remove(path){assertMine(path);const {error}=await client.storage.from(photoBucket).remove([path]);if(error)throw error;}
+  };
   const clean=()=>JSON.parse(JSON.stringify(db));
   const valid=d=>d&&typeof d==='object'&&!Array.isArray(d)&&d.profile&&Array.isArray(d.weights)&&['meals','water','workouts','doses','symptoms','events','measurements'].every(k=>Array.isArray(d[k]));
   function importOldPrompt(){
