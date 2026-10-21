@@ -1,0 +1,12 @@
+MINHA EVOLUÇÃO — TREINO DA IMAGEM + CARDÁPIO SEMANAL
+
+Atualização mantém login, Supabase, e sincronização atuais.
+
+Para publicar no GitHub, envie apenas:
+- index.html (substituir arquivo atual)
+- treino-referencia.jpg (arquivo novo)
+- moodboard-bg.jpg (se ainda não estiver no repositório)
+
+NÃO apague ou substitua config.js e cloud.js.
+
+Treino e cardápio são sugestões; para necessidades individuais, procure profissionais de saúde e exercício.
